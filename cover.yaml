@@ -44,7 +44,7 @@ action:
             metadata: {}
             data: {}
             target:
-              device_id: !input cover
+              entity_id: !input cover
         alias: Zar
       - conditions:
           - condition: trigger
@@ -55,5 +55,5 @@ action:
             metadata: {}
             data: {}
             target:
-              device_id: !input cover
+              entity_id: !input cover
         alias: Nyit
