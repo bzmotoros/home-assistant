@@ -32,6 +32,18 @@ trigger:
     type: remote_button_short_press
     subtype: turn_off
     id: nyit
+  - device_id: !input controller_device
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: turn_off
+    id: megallit1    
+  - device_id: !input controller_device
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: turn_on
+    id: megallit2        
 condition: []
 action:
   - choose:
@@ -56,4 +68,15 @@ action:
             data: {}
             target:
               entity_id: !input cover
+      - conditions:
+          - condition: trigger
+            id:
+              - megallit1
+              - megallit2
+        sequence:
+          - service: cover.stop_cover
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input cover              
         alias: Nyit
