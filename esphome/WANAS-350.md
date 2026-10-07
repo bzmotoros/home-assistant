@@ -5,8 +5,13 @@ Konfig: [`wanas-350.yaml`](wanas-350.yaml)
 ## Hardver
 
 - **Waveshare ESP32-S3-RS485-CAN** (DIN-sínes, izolált RS485). A CAN részt nem használjuk.
-- **Táp:** 7–36 V DC a csavaros sorkapcson (pl. 12 V-os DIN-sínes táp), vagy 5 V USB-C-n.
+- **Táp:** 7–36 V DC a csavaros sorkapcson, vagy 5 V USB-C-n.
   A kettőt **egyszerre ne** kösd rá, a Waveshare szerint ez károsíthatja a modult.
+  - Javasolt: a WANAS vezérlő **„Wyjście DC 24V” kimenete** (max 0,5 A, saját 0,5 A-es
+    biztosítékkal). A vezérlő 2. (relés, 230 V-os) paneljén van. A modul ezen kb. 30–50 mA-t
+    vesz fel. Bekötés előtt nézd meg, hogy nincs-e már rákötve valami, és mérd meg, hogy
+    tényleg kb. 24 V-ot ad-e.
+  - Másik lehetőség: USB-C telefontöltő (5 V, legalább 1 A) a szellőző melletti konnektorból.
 - **Kábel:** 2 vagy 3 eres, lehetőleg sodrott érpár (pl. egy UTP-kábel egy érpárja) a WANAS
   vezérlőpaneljéig.
 
@@ -31,6 +36,10 @@ Modbus 2 (B, A), TECH RS (RX, TX, +, GND).
 | MODBUS 2 – **A**   | **A**           |
 | MODBUS 2 – **B**   | **B**           |
 | GND (a Modbus 2 melletti) | GND (ajánlott) |
+| 2. panel, Wyjście DC 24V **+** | táp + (7–36 V) |
+| 2. panel, Wyjście DC 24V **−** | táp GND |
+
+A szellőzőben 230 V is van. **Bármilyen bekötés előtt húzd ki a gép dugóját.**
 
 - A Waveshare 120 Ω-os lezáró jumpere néhány méteres kábelnél maradhat kikapcsolva.
   Hosszú kábelnél kapcsold be.
@@ -44,6 +53,8 @@ Modbus 2 (B, A), TECH RS (RX, TX, +, GND).
 Gyári beállítás: **19200 baud, E-8-1 (páros paritás), cím: 1**. A konfig is ezt használja.
 Ha a telepítő átállította, a `uart` és a `modbus_address` értékeit igazítsd hozzá.
 A firmware-verziót a kijelzőn az *Informacje o programie* menüpont mutatja.
+Ezt a konfigot a Display V2 panelhez (sorkapcsos, oldalt USB-port) írtam, DISP 3.1 és MOD 3.2
+szoftverhez. A régebbi Display V1 panelen (RJ12 aljzatok) nincs Modbus csatlakozó.
 
 ## Telepítés
 
@@ -56,8 +67,9 @@ A firmware-verziót a kijelzőn az *Informacje o programie* menüpont mutatja.
    wanas_api_key: "..."      # pl.: openssl rand -base64 32
    wanas_ap_password: "..."  # tartalék hozzáférési pont jelszava
    ```
-4. Az első feltöltés USB-C-n menjen (közben a sorkapocsról vedd le a tápot). Utána már
-   Wi-Fi-n is frissíthető.
+4. Az első feltöltést még beszerelés előtt, az asztalon csináld USB-C-n, laptopról. A
+   24 V-ot csak utána kösd be. Később a frissítés már Wi-Fi-n megy, a modult nem kell
+   kiszedni.
 5. Home Assistantban az ESPHome integráció automatikusan megtalálja az eszközt.
 
 ## Mit tud
